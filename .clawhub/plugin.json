@@ -1,0 +1,26 @@
+{
+  "name": "olostep",
+  "version": "1.0.0",
+  "description": "Turn the entire web into LLM-ready context. Olostep integrates web search, scraping, crawling, and AI answers directly into OpenClaw. Essential for agent workflows: debug obscure errors by scraping GitHub issues, automate framework migrations by scraping breaking changes, turn websites into typed JSON schemas, or crawl entire API docs into context. Handles JS rendering, anti-bot, and proxies automatically.",
+  "author": {
+    "name": "Olostep",
+    "email": "support@olostep.com"
+  },
+  "homepage": "https://olostep.com",
+  "repository": "https://github.com/olostep/olostep-clawhub-plugin",
+  "license": "MIT",
+  "keywords": [
+    "web-scraping",
+    "web-search",
+    "crawling",
+    "markdown-extraction",
+    "schema-extraction",
+    "ai-answers",
+    "code-migration",
+    "mcp",
+    "olostep"
+  ],
+  "logo": "assets/logo.png",
+  "skills": "./skills/",
+  "mcpServers": "./mcp.json"
+}
