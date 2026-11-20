@@ -16,7 +16,7 @@ Take the pain out of major version upgrades. Scrape the official migration guide
 ## Workflow
 
 1. Scrape the provided migration guide URL using `scrape_website` (use `output_format: markdown`).
-2. If the guide spans multiple pages, use `get_website_urls` or `create_map` to find the specific pages relevant to the user's code, and `batch_scrape_urls` to read them all.
+2. If the guide spans multiple pages, use `create_map` (with a `search_query`) to find the specific pages relevant to the user's code, and `batch_scrape_urls` to read them all.
 3. Extract the specific "Before" and "After" patterns, breaking changes, and deprecated methods from the scraped markdown.
 4. Analyze the user's open or selected code files.
 5. Apply the necessary changes, explaining exactly what was updated based on the migration guide.

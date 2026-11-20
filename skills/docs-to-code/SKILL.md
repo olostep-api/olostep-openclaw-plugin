@@ -23,7 +23,7 @@ AI models hallucinate API parameters, use deprecated methods, and miss breaking 
 ## Workflow
 
 1. **Scrape the docs page**: `scrape_website` with `output_format: markdown`, `wait_before_scraping: 2000`.
-2. **If docs span multiple pages**: Use `get_website_urls` or `create_map` to find sub-pages (auth, endpoints, types, errors), then scrape the relevant ones.
+2. **If docs span multiple pages**: Use `create_map` (with a `search_query`) to find sub-pages (auth, endpoints, types, errors), then scrape the relevant ones.
 3. **For entire doc sites**: Use `create_crawl` with `max_pages: 15` to ingest a full docs section.
 4. **Parse the API surface**: Extract endpoints, parameters (required vs optional), auth patterns, request/response shapes, error codes.
 5. **Write the code**: Use **exactly** what's in the docs — don't guess, don't hallucinate. Include:
