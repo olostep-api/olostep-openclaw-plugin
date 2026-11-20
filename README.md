@@ -7,7 +7,7 @@
 ![MCP Tools](https://img.shields.io/badge/MCP_tools-9-blueviolet)
 ![CI](https://img.shields.io/badge/CI-integrity_tests-brightgreen)
 
-Give your OpenClaw agent the live web. Scrape any URL to clean markdown, search Google with structured results, crawl entire sites, batch-process up to 10,000 URLs in parallel, and get AI-synthesized answers with citations — all from inside your agent workflow.
+Give your OpenClaw agent the live web. Scrape any URL to clean markdown, search the live web, crawl entire sites, batch-process up to 100,000 URLs in parallel, and get AI-synthesized answers with citations — all from inside your agent workflow.
 
 This plugin provides **13 skills** for high-level agent workflows and a **9-tool MCP server** for direct tool access. Handles JS rendering, anti-bot bypass, CAPTCHAs, and residential proxies automatically.
 
@@ -48,9 +48,9 @@ Get your free API key at [olostep.com/auth](https://olostep.com/auth) — 500 re
 | Skill | What it does |
 |-------|-------------|
 | **scrape** | Extract clean markdown, HTML, JSON, or text from any URL. Full browser rendering with anti-bot bypass. Supports geo-targeting, browser actions (click, scroll, type), and pre-built parsers. |
-| **search** | Three search tools in one: `answers` for AI-synthesized results, `google_search` for raw SERP data, and `get_website_urls` for finding pages within a specific domain. |
+| **search** | Three search tools in one: `answers` for AI-synthesized results, `search_web` for live web results, and `create_map` for finding pages within a specific domain. |
 | **crawl** | Follow links from a starting URL and scrape every page discovered. Set `max_pages`, include/exclude URL patterns, and control crawl depth. |
-| **batch** | Scrape up to 10,000 URLs in parallel. All pages rendered concurrently. Use `custom_id` to map results back to sources. |
+| **batch** | Scrape up to 100,000 URLs in parallel. All pages rendered concurrently. Use `custom_id` to map results back to sources. |
 | **map** | Discover every URL on a website instantly. Filter by glob patterns, rank by search query relevance, limit with `top_n`. |
 | **answers** | Ask a question, get an AI-synthesized answer from live web sources with citations. Pass a `json` parameter to get structured output in any shape you define. |
 
@@ -70,19 +70,18 @@ Get your free API key at [olostep.com/auth](https://olostep.com/auth) — 500 re
 
 ## MCP Tools
 
-The bundled MCP server (`olostep-mcp`) exposes 9 tools callable by any MCP-compatible agent:
+The bundled MCP server (`olostep-mcp`) exposes 8 tools callable by any MCP-compatible agent:
 
 | Tool | Description |
 |------|-------------|
 | `scrape_website` | Scrape a single URL — markdown, HTML, JSON, or text output |
-| `get_webpage_content` | Retrieve a webpage as clean markdown |
-| `search_web` | Search the web, get AI-synthesized answers |
-| `google_search` | Structured Google SERP data (organic results, PAA, knowledge graph) |
+| `search_web` | Search the live web — URL, title and description per result, optionally with page content |
 | `answers` | AI-powered answers with citations and optional structured JSON |
-| `batch_scrape_urls` | Batch scrape up to 10,000 URLs in parallel |
+| `batch_scrape_urls` | Batch scrape up to 100,000 URLs in parallel |
+| `get_batch_results` | Get the pages of a batch, a set at a time |
 | `create_crawl` | Crawl a website by following links from a start URL |
+| `get_crawl_results` | Get the pages of a crawl, a set at a time |
 | `create_map` | Discover all URLs on a website with filtering |
-| `get_website_urls` | Search and retrieve relevant URLs from a specific domain |
 
 ---
 
@@ -202,7 +201,7 @@ answer = client.answers.create(
 |--------|----------|---------|
 | POST | `/v1/scrapes` | Scrape a single URL |
 | GET | `/v1/scrapes/:id` | Get scrape result |
-| POST | `/v1/batches` | Start a batch (up to 10k URLs) |
+| POST | `/v1/batches` | Start a batch (up to 100k URLs) |
 | GET | `/v1/batches/:id` | Get batch status |
 | GET | `/v1/batches/:id/items` | Get batch results |
 | POST | `/v1/crawls` | Start a crawl |
@@ -277,7 +276,7 @@ olostep-clawhub-plugin/
       integrity.yml      # CI: static checks on PR, live tests on push to main
   skills/
     answers/SKILL.md     # AI-powered answers with citations
-    batch/SKILL.md       # Batch scrape up to 10k URLs
+    batch/SKILL.md       # Batch scrape up to 100k URLs
     crawl/SKILL.md       # Autonomous website crawling
     debug-error/SKILL.md # Error debugging from live web
     docs-to-code/SKILL.md # Write code from scraped docs

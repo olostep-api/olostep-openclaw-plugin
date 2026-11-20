@@ -1,11 +1,11 @@
 ---
 name: search
-description: Search the web using Olostep for live, up-to-date information. Three tools available — answers (AI-synthesised answers with citations), google_search (structured Google results), and get_website_urls (find pages within a specific site). Use when the user needs current data, comparisons, or facts the AI's training data may not have.
+description: Search the web using Olostep for live, up-to-date information. Three tools available — answers (AI-synthesised answers with citations), search_web (live web results with URL, title and description, optionally with page content), and create_map (find pages within a specific site). Use when the user needs current data, comparisons, or facts the AI's training data may not have.
 ---
 
 # Olostep Search
 
-Search the live web and get answers, structured results, or find specific pages within a site. Three search tools for different needs.
+Search the live web and get answers, search results, or find specific pages within a site. Three search tools for different needs.
 
 ## Why this matters
 
@@ -24,8 +24,8 @@ AI training data goes stale. When a user asks "which library is best" or "what d
 | Need | Tool | Why |
 |------|------|-----|
 | Broad research question, comparison, fact-check | `answers` | AI-synthesised answer from multiple sources, with citations |
-| Raw Google results (organic, PAA, knowledge graph) | `google_search` | Structured SERP data when you need the actual search results |
-| Find pages within a specific site | `get_website_urls` | Ranked URLs from one domain, sorted by relevance to your query |
+| A list of web results to read or compare | `search_web` | Live results with URL, title and description; set `scrape_results` to also get each page's content |
+| Find pages within a specific site | `create_map` | URLs from one site, ranked by relevance to a `search_query` |
 
 ## Workflow
 
@@ -34,14 +34,14 @@ AI training data goes stale. When a user asks "which library is best" or "what d
 2. If the result needs to be used in code, a table, or a comparison, pass a `json` schema.
 3. Present the answer with source URLs — offer to `/scrape` any source for deeper detail.
 
-**For raw Google search results:**
-1. Use `google_search` with the query.
-2. Returns structured organic results, knowledge graph, People Also Ask, related searches.
-3. Use this when you need the actual URLs and snippets, not a synthesised answer.
+**For web search results:**
+1. Use `search_web` with the query. Set `limit` (1-25) for how many results you want.
+2. Returns each result's URL, title and description. Use `include_domains` or `exclude_domains` to narrow the sources.
+3. Set `scrape_results` to `true` when you need the content of each result page in the same call.
 
 **For finding pages within a specific site:**
-1. Use `get_website_urls` with the site URL and search query.
-2. Returns up to 100 URLs ranked by relevance.
+1. Use `create_map` with the site URL and a `search_query`.
+2. Set `top_n` to keep only the most relevant URLs, or filter with `include_url_patterns` such as `/docs/**`.
 3. Offer to `/scrape` the most relevant result for full content.
 
 ## Real developer workflows
@@ -60,11 +60,11 @@ AI training data goes stale. When a user asks "which library is best" or "what d
 
 **"Find the right docs page"**
 > "Search the Supabase docs for row-level security examples"
-→ `get_website_urls` on `https://supabase.com/docs` with query `"row level security"` → ranked URLs → scrape the top one.
+→ `create_map` on `https://supabase.com/docs` with `search_query` `"row level security"` and `top_n` 5 → ranked URLs → scrape the top one.
 
-**"Get raw search results for a competitive analysis"**
-> "Google 'best headless CMS 2026' and give me the top 10 organic results"
-→ `google_search` → structured list of titles, URLs, snippets, and any knowledge graph data.
+**"Get search results for a competitive analysis"**
+> "Search for 'best headless CMS 2026' and give me the top 10 results"
+→ `search_web` with `limit` 10 → list of titles, URLs and descriptions.
 
 **"Check current version / status"**
 > "What's the latest version of Next.js and when was it released?"
@@ -72,7 +72,7 @@ AI training data goes stale. When a user asks "which library is best" or "what d
 
 ## Chain with other skills
 
-- **search → scrape**: Use `answers` or `google_search` to find URLs, then `/scrape` the best ones for full content.
+- **search → scrape**: Use `answers` or `search_web` to find URLs, then `/scrape` the best ones for full content.
 - **search → docs-to-code**: Search for the docs URL, then use `/docs-to-code` workflow to write the integration.
 - **search → batch**: Get a list of URLs from search results, then `/batch` scrape all of them.
 
@@ -84,17 +84,21 @@ AI training data goes stale. When a user asks "which library is best" or "what d
   - String: `"return an array with name, price, and pros for each option"`
   - Object: `{"name": "", "price": "", "pros": [], "cons": []}`
 
-### `google_search` — Structured Google SERP results
+### `search_web` — Live web results
 - **query**: Search query (required)
-- **country**: Country code for localised results, e.g. `US`, `GB` (default: `US`)
+- **limit**: Number of results, 1-25
+- **include_domains** / **exclude_domains**: Only return, or never return, results from these domains
+- **scrape_results**: Set to `true` to also get each result page's content as markdown (uses extra credits per page)
 
-### `get_website_urls` — Find pages within a specific site
+### `create_map` — Find pages within a specific site
 - **url**: Site to search within (required)
-- **search_query**: What to find (required)
+- **search_query**: What to find, used to rank the URLs
+- **top_n**: Keep only the N most relevant URLs
+- **include_url_patterns** / **exclude_url_patterns**: Glob patterns such as `/docs/**`
 
 ## Tips
 - `answers` is the most powerful — it searches the web, reads sources, and returns a synthesised answer with citations
 - The `json` param on `answers` lets you get data in a shape you can paste straight into code or a markdown table
-- Use `google_search` when you need the raw SERP (organic results, PAA, knowledge graph) rather than a synthesised answer
-- Use `get_website_urls` when the user already knows which site to search — it's faster and more precise than broad web search
+- Use `search_web` when you need the actual results (URLs, titles, descriptions) rather than a synthesised answer
+- Use `create_map` when the user already knows which site to search — it's faster and more precise than broad web search
 - Always offer to `/scrape` cited URLs if the user wants deeper detail on any result

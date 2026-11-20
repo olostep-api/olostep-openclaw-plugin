@@ -49,7 +49,7 @@ Or add to the MCP server config:
 Once configured, all Olostep skills are available:
 - `/scrape` — Extract content from any URL (JS rendering + anti-bot bypass built in)
 - `/search` — AI-powered web search with structured JSON output
-- `/batch` — Scrape up to 10,000 URLs in parallel
+- `/batch` — Scrape up to 100,000 URLs in parallel
 - `/crawl` — Autonomously ingest entire websites
 - `/map` — Discover all URLs on a site
 - `/answers` — Get cited, structured answers from live web data

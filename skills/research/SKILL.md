@@ -25,7 +25,7 @@ Developers and product teams make dozens of "which tool should we use?" and "sho
 1. **Quick answer**: Use `answers` with a `json` schema for structured, cited results.
 2. **Deep dive**: Scrape the most relevant sources (`scrape_website`) for full detail.
 3. **Multi-site comparison**: Batch scrape competitors' pricing/features/docs pages.
-4. **Site-specific research**: Use `get_website_urls` to find relevant pages within a specific site.
+4. **Site-specific research**: Use `create_map` with a `search_query` to find relevant pages within a specific site.
 5. **Synthesise and recommend**: Present findings as a table, structured JSON, or clear recommendation — **always end with a recommendation**, don't just list facts.
 
 ## Real developer workflows
@@ -78,8 +78,8 @@ Developers and product teams make dozens of "which tool should we use?" and "sho
 ### Supporting tools (for deep dives)
 - `scrape_website`: Read a specific source in full
 - `batch_scrape_urls`: Compare multiple sites side-by-side (pricing, features, docs)
-- `get_website_urls`: Find specific pages within a site (e.g. competitor's pricing page)
-- `google_search`: Get raw SERP results when you need to discover sources first
+- `create_map`: Find specific pages within a site (e.g. competitor's pricing page) with a `search_query`
+- `search_web`: Get web results (URL, title, description) when you need to discover sources first
 
 ## Tips
 - **Always use a `json` schema** — structured output makes comparisons fair and useful

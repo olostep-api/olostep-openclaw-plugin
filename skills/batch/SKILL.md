@@ -1,11 +1,11 @@
 ---
 name: batch
-description: Scrape up to 10,000 URLs in parallel using Olostep. Use when the user has a list of URLs to extract content from at once — product pages, job listings, pricing pages, changelogs, docs, or any set of known pages. Much faster than scraping one-by-one.
+description: Scrape up to 100,000 URLs in parallel using Olostep. Use when the user has a list of URLs to extract content from at once — product pages, job listings, pricing pages, changelogs, docs, or any set of known pages. Much faster than scraping one-by-one.
 ---
 
 # Olostep Batch Scrape
 
-Scrape up to 10,000 URLs in parallel. All pages are scraped concurrently with full browser rendering, anti-bot bypass, and residential proxies — no rate limiting, no blocking, no setup.
+Scrape up to 100,000 URLs in parallel. All pages are scraped concurrently with full browser rendering, anti-bot bypass, and residential proxies — no rate limiting, no blocking, no setup.
 
 ## Why this matters
 
@@ -65,7 +65,7 @@ Scraping 50 pages sequentially takes minutes and often fails halfway through (ra
 - **batch → code**: Batch scrape API docs pages, then generate typed clients or integration code from the combined content.
 
 ## Parameters
-- **urls_to_scrape**: Array of `{url, custom_id?}` objects, 1–10,000 (required)
+- **urls_to_scrape**: Array of `{url, custom_id?}` objects, 1–100,000 (required)
 - **output_format**: `markdown` (default), `html`, `json`, `text`
 - **wait_before_scraping**: ms to wait per URL for JS rendering, 0–10000 (optional)
 - **country**: Country code for geo-targeted content — e.g. `US`, `GB`, `DE` (optional)
